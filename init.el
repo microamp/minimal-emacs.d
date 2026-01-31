@@ -554,7 +554,9 @@
 
 ;;; Load post init
 (when (fboundp 'minimal-emacs-load-user-init)
-  (minimal-emacs-load-user-init "post-init.el"))
+  (progn
+    (minimal-emacs-load-user-init "post-init.el")
+    (minimal-emacs-load-user-init "post-init-extras.el")))
 (setq minimal-emacs--success t)
 
 ;; Local variables:
