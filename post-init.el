@@ -5,6 +5,11 @@
   :config
   (delete-selection-mode +1))
 
+(use-package dired
+  :ensure nil
+  :custom
+  (dired-listing-switches "-alh"))
+
 (use-package display-line-numbers
   :ensure nil
   :hook (prog-mode . display-line-numbers-mode))
@@ -37,14 +42,23 @@
   (which-key-mode +1))
 
 ;; Unbind M-x m
-(unbind "M-x m" global-map)
+(global-unset-key (kbd "C-x m"))
 
-;; cursor
+;; Bind C-x k to kill-current-buffer (kill-buffer by default)
+(global-set-key (kbd "C-x k") #'kill-current-buffer)
+
+;; Bind C-x | to split-window-horizontally
+(global-set-key (kbd "C-x |") #'split-window-horizontally)
+
+;; Delete trailing whitespace on save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Cursor
 (setq cursor-type 'box)
 
-;; font
+;; Font
 (set-frame-font "monospace:pixelsize=13" nil t)
 
-;; theme
+;; Theme
 (mapc #'disable-theme custom-enabled-themes) ; disable all active themes
 (load-theme 'modus-operandi t)               ; load built-in modus-operandi theme
