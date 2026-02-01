@@ -48,6 +48,29 @@
   :config
   (fido-vertical-mode -1))
 
+(use-package isearch
+  :ensure nil
+  :bind (:map
+         minibuffer-local-isearch-map
+         ("M-/" . isearch-complete-edit)
+         :map
+         isearch-mode-map
+         ("C-g" . isearch-cancel)
+         ("M-/" . isearch-complete)
+         ("M-j" . isearch-yank-symbol-or-char)
+         ("M-n" . isearch-yank-symbol-or-char))
+  :custom
+  (isearch-allow-scroll 'unlimited)
+  (isearch-lax-whitespace t)
+  (isearch-lazy-count t)
+  (isearch-lazy-highlight t)
+  (isearch-yank-on-move 'shift)
+  (lazy-count-prefix-format nil)
+  (lazy-count-suffix-format " (%s/%s)")
+  (search-whitespace-regexp ".*?")
+  :init
+  (setq isearch-regexp-lax-whitespace nil))
+
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
   :init
