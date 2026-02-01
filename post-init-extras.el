@@ -1,7 +1,8 @@
 ;; External dependencies
 
 (use-package consult
-  :ensure t)
+  :ensure t
+  :bind (("M-g i" . consult-imenu)))
 
 (use-package eca
   :ensure t)
