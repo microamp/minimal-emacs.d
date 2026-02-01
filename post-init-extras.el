@@ -2,7 +2,8 @@
 
 (use-package consult
   :ensure t
-  :bind (("M-g i" . consult-imenu)))
+  :bind (("M-g i" . consult-imenu)
+         ("M-s M-l" . consult-line)))
 
 (use-package eca
   :ensure t)
