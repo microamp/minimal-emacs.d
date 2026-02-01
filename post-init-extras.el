@@ -38,6 +38,9 @@
   ;; package.
   (marginalia-mode))
 
+(use-package markdown-mode
+  :ensure t)
+
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
   :custom
