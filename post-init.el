@@ -1,5 +1,9 @@
 ;; Internal dependencies
 
+;;
+;; Packages:
+;;
+
 (use-package delsel
   :ensure nil
   :config
@@ -86,22 +90,56 @@
   :config
   (which-key-mode +1))
 
+;;
+;; Other customisations:
+;;
+
 ;; Unbind M-x m
 (global-unset-key (kbd "C-x m"))
 
 ;; Bind C-x k to kill-current-buffer (kill-buffer by default)
 (global-set-key (kbd "C-x k") #'kill-current-buffer)
-
+pp
 ;; Bind C-x | to split-window-horizontally
 (global-set-key (kbd "C-x |") #'split-window-horizontally)
 
 ;; Delete trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; Smarter navigation to the beginning of a line:
+;; https://emacsredux.com/blog/2013/05/22/smarter-navigation-to-the-beginning-of-a-line/
+
+(defun move-beginning-of-line-dwim (arg)
+  "Move point back to indentation of beginning of line.
+
+Move point to the first non-whitespace character on this line.
+If point is already there, move to the beginning of the line.
+Effectively toggle between the first non-whitespace character and
+the beginning of the line.
+
+If ARG is not nil or 1, move forward ARG - 1 lines first.  If
+point reaches the beginning or end of the buffer, stop there."
+  (interactive "^p")
+  (setq arg (or arg 1))
+
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
+
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
+
+;; remap C-a to `smarter-move-beginning-of-line'
+(global-set-key [remap move-beginning-of-line]
+                'move-beginning-of-line-dwim)
+
 ;; Cursor
 (setq cursor-type 'box)
 
-;; Font
+;; Font (default monospace)
 (set-frame-font "monospace:pixelsize=13" nil t)
 
 ;; Theme
