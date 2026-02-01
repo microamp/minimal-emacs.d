@@ -3,6 +3,9 @@
 (use-package consult
   :ensure t)
 
+(use-package eca
+  :ensure t)
+
 (use-package embark
   :ensure t
   :bind (("C-." . embark-act)
