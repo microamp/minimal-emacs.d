@@ -2,4 +2,7 @@ autosave
 custom.el
 eln-cache
 elpa
+eshell
+history
 projects
+transient
