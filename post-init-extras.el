@@ -16,6 +16,9 @@
 (use-package embark-consult
   :ensure t)
 
+(use-package diminish
+  :ensure t)
+
 (use-package expand-region
   :ensure t
   :bind ("C-x j" . er/expand-region)

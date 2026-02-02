@@ -4,6 +4,10 @@
 ;; Packages:
 ;;
 
+(use-package autorevert
+  :ensure nil
+  :diminish auto-revert-mode)
+
 (use-package delsel
   :ensure nil
   :config
@@ -17,6 +21,10 @@
 (use-package display-line-numbers
   :ensure nil
   :hook (prog-mode . display-line-numbers-mode))
+
+(use-package eldoc
+  :ensure nil
+  :diminish eldoc-mode)
 
 (use-package elec-pair
   :ensure nil
@@ -87,6 +95,7 @@
 
 (use-package which-key
   :ensure nil
+  :diminish which-key-mode
   :config
   (which-key-mode +1))
 
