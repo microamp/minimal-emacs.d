@@ -159,6 +159,11 @@
   :config
   (repeat-mode +1))
 
+(use-package speedbar
+  :ensure nil
+  :custom
+  (speedbar-use-images nil))
+
 (use-package which-key
   :ensure nil
   :diminish which-key-mode
