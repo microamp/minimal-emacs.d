@@ -174,7 +174,6 @@
 
 ;; Bind C-x k to kill-current-buffer (kill-buffer by default)
 (global-set-key (kbd "C-x k") #'kill-current-buffer)
-pp
 ;; Bind C-x | to split-window-horizontally
 (global-set-key (kbd "C-x |") #'split-window-horizontally)
 
