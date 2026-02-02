@@ -54,6 +54,61 @@
   :config
   (blink-cursor-mode +1))
 
+(use-package gnus
+  :bind (:map
+         gnus-group-mode-map
+         ("k" . bury-buffer)
+         :map
+         gnus-summary-mode-map
+         ("<S-return>" . gnus-summary-scroll-down))
+  :custom
+  (gnus-select-method '(nnnil ""))
+  (gnus-permanently-visible-groups "INBOX")
+  (gnus-secondary-select-methods
+   '(
+     ;; (nntp "news.gwene.org")
+     (nnimap "home"
+             (nnimap-inbox "INBOX")
+             (nnimap-address "imap.migadu.com")
+             (nnimap-server-port 993)
+             (nnimap-stream tls)
+             (nnir-search-engine imap)
+             (nnmail-expiry-wait 14)
+             (nnimap-split-methods default))))
+  (gnus-posting-styles
+   '((".*"
+      (name "Sangho Na")
+      (address "sangho@nsh.nz")
+      (signature-file "~/.emacs.d/imap-sig-home")
+      (gcc "nnimap+home:Sent")
+      ("X-Message-SMTP-Method" "smtp smtp.migadu.com 465 sangho@nsh.nz"))))
+  (gnus-article-browse-delete-temp t)
+  (gnus-auto-select-first t)
+  (gnus-extra-headers '(To Newsgroups X-GM-LABELS))
+  (gnus-group-line-format "%M%S%p%P%5y:%B %G\n")
+  (gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\”]\”[#’()]")
+  (gnus-keep-backlog '0)
+  (gnus-keep-backlog 'nil)
+  (gnus-large-newsgroup 200)
+  (gnus-mime-display-multipart-related-as-mixed t)
+  (gnus-subthread-sort-functions '(gnus-thread-sort-by-date))
+  (gnus-sum-thread-tree-false-root "")
+  (gnus-sum-thread-tree-indent " ")
+  (gnus-sum-thread-tree-leaf-with-other "├► ")
+  (gnus-sum-thread-tree-root "")
+  (gnus-sum-thread-tree-single-leaf "╰► ")
+  (gnus-sum-thread-tree-vertical "│")
+  (gnus-summary-display-arrow nil)
+  (gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f  %B (%c) %s%)\n")
+  (gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references)
+  (gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date))
+  (gnus-treat-strip-trailing-blank-lines 'last)
+  (gnus-use-cache t)
+  (gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M")))
+  (smiley-style 'medium)
+  :config
+  (add-hook 'gnus-group-mode-hook 'gnus-topic-mode))
+
 ;; Prefer vertico
 (use-package icomplete
   :ensure nil
@@ -82,6 +137,17 @@
   (search-whitespace-regexp ".*?")
   :init
   (setq isearch-regexp-lax-whitespace nil))
+
+(use-package message
+  :ensure nil
+  :custom
+  (message-cite-reply-position 'above)
+  (message-dont-reply-to-names "sangho@nsh.nz")
+  :config
+  (defun nsh/confirm-before-send-mail ()
+    (or (yes-or-no-p "Are you sure to send this mail? ")
+        (keyboard-quit)))
+  (add-hook 'message-send-mail-hook #'nsh/confirm-before-send-mail))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
