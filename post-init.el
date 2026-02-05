@@ -8,6 +8,12 @@
   :ensure nil
   :diminish auto-revert-mode)
 
+(use-package browse-url
+  :ensure nil
+  :custom
+  (browse-url-browser-function 'browse-url-generic)
+  (browse-url-generic-program "librewolf"))
+
 (use-package delsel
   :ensure nil
   :config
