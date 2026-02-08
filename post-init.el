@@ -144,6 +144,11 @@
   :init
   (setq isearch-regexp-lax-whitespace nil))
 
+(use-package js
+  :ensure nil
+  :custom
+  (js-indent-level 2))
+
 (use-package message
   :ensure nil
   :custom
