@@ -6,7 +6,13 @@
          ("M-s M-l" . consult-line)))
 
 (use-package eca
-  :ensure t)
+  :ensure t
+  :bind (("C-x , e" . eca)
+         ("C-x , k" . eca-stop)
+         ("C-x , c" . eca-chat-new)
+         ("C-x , s" . eca-chat-send-prompt))
+  :custom
+  (eca-chat-custom-model "qwen/qwen3-coder:free"))
 
 (use-package embark
   :ensure t
