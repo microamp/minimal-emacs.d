@@ -5,12 +5,43 @@
   :bind (("M-g i" . consult-imenu)
          ("M-s M-l" . consult-line)))
 
+(use-package diminish
+  :ensure t)
+
+(use-package denote
+  :ensure t
+  :commands (denote denote-recent denote-backlinks)
+  :custom
+  ;; Set the directory where notes will be stored
+  (denote-directory "~/notes")
+  ;; Use Org mode for notes (default is Org)
+  (denote-document-type 'org)
+  ;; File naming pattern: date-title-keywords.org
+  (denote-file-name-format "date-title-keywords")
+  ;; Keywords delimiter
+  (denote-keywords-delimiter "-")
+  ;; Prompt for keywords when creating notes
+  (denote-prompt-for-keywords t)
+  ;; Prompt for title when creating notes
+  (denote-prompt-for-title t)
+  :bind
+  (("C-c n n" . denote)
+   ("C-c n r" . denote-recent)
+   ("C-c n b" . denote-backlinks)
+   ("C-c n f" . denote-find-file)
+   ("C-c n l" . denote-link))
+  :config
+  ;; Add denote minor modes toorg-mode
+  (add-hook 'org-mode-hook 'denote-indent-region-mode)
+  (add-hook 'org-mode-hook 'denote-titles-mode))
+
 (use-package eca
   :ensure t
   :bind (("C-x , e" . eca)
          ("C-x , k" . eca-stop)
          ("C-x , c" . eca-chat-new)
-         ("C-x , s" . eca-chat-send-prompt)))
+         ("C-x , s" . eca-chat-send-prompt)
+         ("C-x , t" . eca-chat-toggle-window)))
 
 (use-package embark
   :ensure t
@@ -18,9 +49,6 @@
          ("C-;" . embark-dwim)))
 
 (use-package embark-consult
-  :ensure t)
-
-(use-package diminish
   :ensure t)
 
 (use-package expand-region
