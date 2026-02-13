@@ -8,32 +8,30 @@
 (use-package diminish
   :ensure t)
 
+;; Remember that the website version of this manual shows the latest
+;; developments, which may not be available in the package you are
+;; using.  Instead of copying from the web site, refer to the version
+;; of the documentation that comes with your package.  Evaluate:
+;;
+;;     (info "(denote) Sample configuration")
 (use-package denote
   :ensure t
-  :commands (denote denote-recent denote-backlinks)
-  :custom
-  ;; Set the directory where notes will be stored
-  (denote-directory "~/notes")
-  ;; Use Org mode for notes (default is Org)
-  (denote-document-type 'org)
-  ;; File naming pattern: date-title-keywords.org
-  (denote-file-name-format "date-title-keywords")
-  ;; Keywords delimiter
-  (denote-keywords-delimiter "-")
-  ;; Prompt for keywords when creating notes
-  (denote-prompt-for-keywords t)
-  ;; Prompt for title when creating notes
-  (denote-prompt-for-title t)
+  :hook (dired-mode . denote-dired-mode)
   :bind
   (("C-c n n" . denote)
-   ("C-c n r" . denote-recent)
+   ("C-c n r" . denote-rename-file)
+   ("C-c n l" . denote-link)
    ("C-c n b" . denote-backlinks)
-   ("C-c n f" . denote-find-file)
-   ("C-c n l" . denote-link))
+   ("C-c n d" . denote-dired)
+   ("C-c n g" . denote-grep))
   :config
-  ;; Add denote minor modes toorg-mode
-  (add-hook 'org-mode-hook 'denote-indent-region-mode)
-  (add-hook 'org-mode-hook 'denote-titles-mode))
+  (setq denote-directory (expand-file-name "~/notes/"))
+
+  ;; Automatically rename Denote buffers when opening them so that
+  ;; instead of their long file name they have, for example, a literal
+  ;; "[D]" followed by the file's title.  Read the doc string of
+  ;; `denote-rename-buffer-format' for how to modify this.
+  (denote-rename-buffer-mode 1))
 
 (use-package eca
   :ensure t
