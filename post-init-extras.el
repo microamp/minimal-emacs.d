@@ -2,7 +2,9 @@
 
 (use-package consult
   :ensure t
-  :bind (("M-g i" . consult-imenu)
+  :bind (("C-x b" . consult-buffer)
+         ("C-x p q" . consult-ripgrep)
+         ("M-g i" . consult-imenu)
          ("M-s M-l" . consult-line)))
 
 (use-package diminish
