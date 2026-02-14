@@ -160,6 +160,12 @@
         (keyboard-quit)))
   (add-hook 'message-send-mail-hook #'nsh/confirm-before-send-mail))
 
+(use-package org-mode
+  :ensure nil
+  :bind (:map
+         org-mode-map
+         ("C-j" . org-return)))
+
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
   :init
