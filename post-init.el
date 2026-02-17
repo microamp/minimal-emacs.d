@@ -166,6 +166,15 @@
          org-mode-map
          ("C-j" . org-return)))
 
+(use-package recentf
+  :ensure nil
+  :demand t
+  :custom
+  (recentf-max-menu-items 100)
+  (recentf-max-saved-items 100)
+  :config
+  (recentf-mode +1))
+
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
   :init
