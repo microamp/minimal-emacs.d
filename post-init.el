@@ -240,4 +240,4 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; Theme
 (mapc #'disable-theme custom-enabled-themes) ; disable all active themes
-(load-theme 'modus-operandi t)               ; load built-in modus-operandi theme
+(load-theme 'modus-operandi-tinted t)        ; load built-in modus-operandi theme
