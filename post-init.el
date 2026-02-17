@@ -8,6 +8,11 @@
   :ensure nil
   :diminish auto-revert-mode)
 
+(use-package avoid
+  :ensure nil
+  :config
+  (mouse-avoidance-mode 'banish))
+
 (use-package browse-url
   :ensure nil
   :custom
