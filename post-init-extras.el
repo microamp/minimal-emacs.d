@@ -1,5 +1,8 @@
 ;; External dependencies
 
+(use-package agent-shell
+  :ensure t)
+
 (use-package consult
   :ensure t
   :bind (("C-x b" . consult-buffer)
@@ -55,6 +58,9 @@
   :ensure t
   :bind ("C-x j" . er/expand-region)
   :custom ((expand-region-contract-fast-key "k")))
+
+(use-package gptel
+  :ensure t)
 
 (use-package magit
   :ensure t)

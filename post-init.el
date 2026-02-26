@@ -33,6 +33,9 @@
   :ensure nil
   :hook (prog-mode . display-line-numbers-mode))
 
+(use-package eglot
+  :ensure nil)
+
 (use-package eldoc
   :ensure nil
   :diminish eldoc-mode)
@@ -169,7 +172,9 @@
   :ensure nil
   :bind (:map
          org-mode-map
-         ("C-j" . org-return)))
+         ("C-j" . org-return)
+         ("M-N" . org-move-item-down)
+         ("M-P" . org-move-item-up)))
 
 (use-package recentf
   :ensure nil
