@@ -174,7 +174,11 @@
          org-mode-map
          ("C-j" . org-return)
          ("M-N" . org-move-item-down)
-         ("M-P" . org-move-item-up)))
+         ("M-P" . org-move-item-up))
+  :init
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((emacs-lisp . t)
+                               (shell . t))))
 
 (use-package recentf
   :ensure nil
