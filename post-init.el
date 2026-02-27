@@ -176,6 +176,19 @@
         (keyboard-quit)))
   (add-hook 'message-send-mail-hook #'nsh/confirm-before-send-mail))
 
+(defun org-move-beginning-of-line-dwim (arg)
+  "Use `move-beginning-of-line-dwim' inside src blocks, `org-beginning-of-line' elsewhere.
+
+`org-mode-map' remaps `move-beginning-of-line' to `org-beginning-of-line', which
+only provides dwim behaviour for headlines and list items — source block lines fall
+straight through to a plain `move-beginning-of-line' with no back-to-indentation
+toggle.  This wrapper restores the expected dwim toggle when point is inside a src
+block."
+  (interactive "^p")
+  (if (org-in-src-block-p)
+      (move-beginning-of-line-dwim arg)
+    (org-beginning-of-line arg)))
+
 (use-package org-mode
   :ensure nil
   :bind (:map
@@ -186,7 +199,12 @@
   :init
   (org-babel-do-load-languages
    'org-babel-load-languages '((emacs-lisp . t)
-                               (shell . t))))
+                               (shell . t)))
+  :config
+  ;; Wire up directly with define-key to avoid use-package generating an
+  ;; autoload stub that tries (require 'org-mode) — the real feature is 'org.
+  (define-key org-mode-map [remap move-beginning-of-line]
+              #'org-move-beginning-of-line-dwim))
 
 (use-package recentf
   :ensure nil
