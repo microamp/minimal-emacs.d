@@ -101,6 +101,11 @@
   (completion-category-defaults nil) ;; Disable defaults, use our settings
   (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
 
+(use-package pi-coding-agent
+  :ensure t
+  :bind (("C-x , c" . pi-coding-agent)
+         ("C-x , t" . pi-coding-agent-toggle)))
+
 ;; Enable Vertico.
 (use-package vertico
   :custom
