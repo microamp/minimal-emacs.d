@@ -81,7 +81,10 @@
   ;; available in the *Completions* buffer, add it to the
   ;; `completion-list-mode-map'.
   :bind (:map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
+              ("M-A" . marginalia-cycle))
+
+  :custom
+  (magit-diff-refine-hunk t)
 
   ;; The :init section is always executed.
   :init
