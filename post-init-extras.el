@@ -38,13 +38,19 @@
   ;; `denote-rename-buffer-format' for how to modify this.
   (denote-rename-buffer-mode 1))
 
-(use-package eca
+(use-package eat
   :ensure t
-  :bind (("C-x , e" . eca)
-         ("C-x , k" . eca-stop)
-         ("C-x , c" . eca-chat-new)
-         ("C-x , s" . eca-chat-send-prompt)
-         ("C-x , t" . eca-chat-toggle-window)))
+  :bind ("C-c C-SPC" . my/eat-switch-or-create)
+  :config
+  (defun my/eat-switch-or-create ()
+    "Switch to an existing eat buffer, or create one in the current directory."
+    (interactive)
+    (if (get-buffer "*eat*")
+        (switch-to-buffer "*eat*")
+      (eat))))
+
+(use-package eca
+  :ensure t)
 
 (use-package embark
   :ensure t
