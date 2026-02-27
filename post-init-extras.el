@@ -105,6 +105,7 @@
 (use-package pi-coding-agent
   :ensure t
   :bind (("C-x , c" . pi-coding-agent)
+         ("C-x , k" . pi-coding-agent-quit)
          ("C-x , t" . pi-coding-agent-toggle)))
 
 ;; Enable Vertico.
