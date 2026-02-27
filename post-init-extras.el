@@ -40,7 +40,8 @@
 
 (use-package eat
   :ensure t
-  :bind ("C-c C-SPC" . my/eat-switch-or-create)
+  :bind (("C-c C-SPC" . my/eat-switch-or-create)
+         (:map eat-mode-map ("C-c C-SPC" . bury-buffer)))
   :config
   (defun my/eat-switch-or-create ()
     "Switch to an existing eat buffer, or create one in the current directory."
