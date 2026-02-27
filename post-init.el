@@ -200,7 +200,6 @@ block."
   (org-babel-do-load-languages
    'org-babel-load-languages '((emacs-lisp . t)
                                (shell . t)))
-  :config
   ;; Wire up directly with define-key to avoid use-package generating an
   ;; autoload stub that tries (require 'org-mode) — the real feature is 'org.
   (define-key org-mode-map [remap move-beginning-of-line]
