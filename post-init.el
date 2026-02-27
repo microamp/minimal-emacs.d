@@ -34,7 +34,15 @@
   :hook (prog-mode . display-line-numbers-mode))
 
 (use-package eglot
-  :ensure nil)
+  :ensure nil
+  :hook ((python-mode python-ts-mode) . eglot-ensure)
+  :custom
+  (eglot-autoshutdown t)
+  :config
+  ;; (add-to-list 'eglot-server-programs '(python-mode . ("ty" "server")))
+  ;; (add-to-list 'eglot-server-programs '(python-ts-mode . ("ty" "server")))
+  (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
+  (add-to-list 'eglot-server-programs '(python-ts-mode . ("pyright-langserver" "--stdio"))))
 
 (use-package eldoc
   :ensure nil
