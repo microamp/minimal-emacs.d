@@ -205,6 +205,15 @@ block."
   (define-key org-mode-map [remap move-beginning-of-line]
               #'org-move-beginning-of-line-dwim))
 
+(use-package python
+  :ensure nil
+  :bind (:map
+         python-base-mode-map
+         ("M-n" . python-nav-forward-statement)
+         ("M-p" . python-nav-backward-statement)
+         ("M-[" . python-nav-backward-defun)
+         ("M-]" . python-nav-forward-defun)))
+
 (use-package recentf
   :ensure nil
   :demand t
