@@ -69,6 +69,13 @@
   :bind ("C-x j" . er/expand-region)
   :custom ((expand-region-contract-fast-key "k")))
 
+(use-package exec-path-from-shell
+  :ensure t
+  :custom
+  (exec-path-from-shell-variables '("GPG_TTY" "PATH"))
+  :config
+  (exec-path-from-shell-initialize))
+
 (use-package gptel
   :ensure t)
 
