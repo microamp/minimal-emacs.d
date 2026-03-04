@@ -6,7 +6,17 @@
 
 (use-package autorevert
   :ensure nil
-  :diminish auto-revert-mode)
+  :diminish auto-revert-mode
+  :custom
+  ;; Poll every 1 second as a fallback (file notifications handle most cases
+  ;; instantly without any polling cost).
+  (auto-revert-interval 1)
+  ;; Use OS file-change notifications (inotify on Linux) — zero polling cost.
+  (auto-revert-use-notify t)
+  ;; Don't revert while the user is typing or interacting.
+  (auto-revert-stop-on-user-input t)
+  :config
+  (global-auto-revert-mode +1))
 
 (use-package avoid
   :ensure nil
@@ -33,16 +43,53 @@
   :ensure nil
   :hook (prog-mode . display-line-numbers-mode))
 
+(use-package treesit
+  :ensure nil
+  :preface
+  (defun mp-setup-install-grammars ()
+    "Install Tree-sitter grammars if they are absent."
+    (interactive)
+    (dolist (grammar
+             '((css . ("https://github.com/tree-sitter/tree-sitter-css" "v0.20.0"))
+               (go . ("https://github.com/tree-sitter/tree-sitter-go" "v0.20.0"))
+               (html . ("https://github.com/tree-sitter/tree-sitter-html" "v0.20.1"))
+               (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.20.1" "src"))
+               (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.20.2"))
+               (markdown . ("https://github.com/ikatyang/tree-sitter-markdown" "v0.7.1"))
+               (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.20.4"))
+               (rust . ("https://github.com/tree-sitter/tree-sitter-rust" "v0.21.2"))
+               (toml . ("https://github.com/tree-sitter/tree-sitter-toml" "v0.5.1"))
+               (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "tsx/src"))
+               (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
+               (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))))
+      (add-to-list 'treesit-language-source-alist grammar)
+      (unless (treesit-language-available-p (car grammar))
+        (treesit-install-language-grammar (car grammar)))))
+  (dolist (mapping
+           '((python-mode . python-ts-mode)
+             (css-mode . css-ts-mode)
+             (typescript-mode . typescript-ts-mode)
+             (js2-mode . js-ts-mode)
+             (bash-mode . bash-ts-mode)
+             (conf-toml-mode . toml-ts-mode)
+             (go-mode . go-ts-mode)
+             (json-mode . json-ts-mode)
+             (js-json-mode . json-ts-mode)))
+    (add-to-list 'major-mode-remap-alist mapping))
+  :config
+  (mp-setup-install-grammars))
+
 (use-package eglot
   :ensure nil
   :hook ((python-mode python-ts-mode) . eglot-ensure)
+  :hook ((typescript-ts-mode tsx-ts-mode) . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
   :config
-  ;; (add-to-list 'eglot-server-programs '(python-mode . ("ty" "server")))
-  ;; (add-to-list 'eglot-server-programs '(python-ts-mode . ("ty" "server")))
   (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
-  (add-to-list 'eglot-server-programs '(python-ts-mode . ("pyright-langserver" "--stdio"))))
+  (add-to-list 'eglot-server-programs '(python-ts-mode . ("pyright-langserver" "--stdio")))
+  (add-to-list 'eglot-server-programs '(terraform-mode . ("terraform-ls" "serve")))
+  (add-to-list 'eglot-server-programs '((typescript-ts-mode tsx-ts-mode) . ("typescript-language-server" "--stdio"))))
 
 (use-package eldoc
   :ensure nil
@@ -258,36 +305,6 @@ block."
 
 ;; Delete trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Smarter navigation to the beginning of a line:
-;; https://emacsredux.com/blog/2013/05/22/smarter-navigation-to-the-beginning-of-a-line/
-
-(defun move-beginning-of-line-dwim (arg)
-  "Move point back to indentation of beginning of line.
-
-Move point to the first non-whitespace character on this line.
-If point is already there, move to the beginning of the line.
-Effectively toggle between the first non-whitespace character and
-the beginning of the line.
-
-If ARG is not nil or 1, move forward ARG - 1 lines first.  If
-point reaches the beginning or end of the buffer, stop there."
-  (interactive "^p")
-  (setq arg (or arg 1))
-
-  ;; Move lines first
-  (when (/= arg 1)
-    (let ((line-move-visual nil))
-      (forward-line (1- arg))))
-
-  (let ((orig-point (point)))
-    (back-to-indentation)
-    (when (= orig-point (point))
-      (move-beginning-of-line 1))))
-
-;; remap C-a to `smarter-move-beginning-of-line'
-(global-set-key [remap move-beginning-of-line]
-                'move-beginning-of-line-dwim)
 
 ;; Cursor
 (setq cursor-type 'box)
