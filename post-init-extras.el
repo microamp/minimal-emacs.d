@@ -78,6 +78,7 @@
 
 (use-package git-gutter
   :ensure t
+  :diminish git-gutter-mode
   :hook (prog-mode . git-gutter-mode)
   :config
   (setq git-gutter:update-interval 0.02))
@@ -135,6 +136,7 @@
 (use-package pi-coding-agent
   :ensure t
   :bind (("C-x , c" . pi-coding-agent)
+         ("C-x , d" . pi-coding-agent-cycle-thinking)
          ("C-x , k" . pi-coding-agent-quit)
          ("C-x , t" . pi-coding-agent-toggle)))
 

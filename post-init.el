@@ -114,7 +114,9 @@
   (read-extended-command-predicate #'command-completion-default-include-p)
   ;; Do not allow the cursor in the minibuffer prompt
   (minibuffer-prompt-properties
-   '(read-only t cursor-intangible t face minibuffer-prompt)))
+   '(read-only t cursor-intangible t face minibuffer-prompt))
+  :config
+  (global-set-key [remap dabbrev-expand] 'hippie-expand))
 
 (use-package frame
   :ensure nil
