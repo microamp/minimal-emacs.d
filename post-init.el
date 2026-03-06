@@ -4,6 +4,10 @@
 ;; Packages:
 ;;
 
+(use-package ansi-color
+  :ensure nil
+  :hook (compilation-filter . ansi-color-compilation-filter))
+
 (use-package autorevert
   :ensure nil
   :diminish auto-revert-mode
