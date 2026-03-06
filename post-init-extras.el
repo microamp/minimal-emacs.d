@@ -3,6 +3,15 @@
 (use-package agent-shell
   :ensure t)
 
+(use-package combobulate
+  :ensure t
+  :vc (:url "https://github.com/mickeynp/combobulate" :branch "master")
+  :custom
+  ;; You can customize Combobulate's key prefix here.
+  ;; Note that you may have to restart Emacs for this to take effect!
+  (combobulate-key-prefix "C-c o")
+  :hook ((prog-mode . combobulate-mode)))
+
 (use-package consult
   :ensure t
   :bind (("C-x b" . consult-buffer)
