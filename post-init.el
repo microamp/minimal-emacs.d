@@ -24,6 +24,7 @@
 
 (use-package avoid
   :ensure nil
+  :defer t
   :config
   (mouse-avoidance-mode 'banish))
 
@@ -250,13 +251,14 @@ block."
          ("M-N" . org-move-item-down)
          ("M-P" . org-move-item-up))
   :init
-  (org-babel-do-load-languages
-   'org-babel-load-languages '((emacs-lisp . t)
-                               (shell . t)))
   ;; Wire up directly with define-key to avoid use-package generating an
   ;; autoload stub that tries (require 'org-mode) — the real feature is 'org.
   (define-key org-mode-map [remap move-beginning-of-line]
-              #'org-move-beginning-of-line-dwim))
+              #'org-move-beginning-of-line-dwim)
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((emacs-lisp . t)
+                               (shell . t))))
 
 (use-package python
   :ensure nil

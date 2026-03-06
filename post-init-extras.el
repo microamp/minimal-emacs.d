@@ -71,7 +71,8 @@
          ("C-;" . embark-dwim)))
 
 (use-package embark-consult
-  :ensure t)
+  :ensure t
+  :after (embark consult))
 
 (use-package expand-region
   :ensure t
@@ -82,8 +83,7 @@
   :ensure t
   :custom
   (exec-path-from-shell-variables '("GPG_TTY" "PATH"))
-  :config
-  (exec-path-from-shell-initialize))
+  :hook (emacs-startup . exec-path-from-shell-initialize))
 
 (use-package git-gutter
   :ensure t
@@ -94,6 +94,7 @@
 
 (use-package git-gutter-fringe
   :ensure t
+  :after git-gutter
   :config
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
