@@ -250,12 +250,11 @@ block."
          ("C-j" . org-return)
          ("M-N" . org-move-item-down)
          ("M-P" . org-move-item-up))
-  :init
+  :config
   ;; Wire up directly with define-key to avoid use-package generating an
   ;; autoload stub that tries (require 'org-mode) — the real feature is 'org.
   (define-key org-mode-map [remap move-beginning-of-line]
               #'org-move-beginning-of-line-dwim)
-  :config
   (org-babel-do-load-languages
    'org-babel-load-languages '((emacs-lisp . t)
                                (shell . t))))
