@@ -129,6 +129,7 @@
 
 (use-package mwim
   :ensure t
+  :functions mwim-beginning-of-code-or-line
   :bind (("C-a" . mwim-beginning-of-code-or-line)))
 
 ;; Optionally use the `orderless' completion style.
