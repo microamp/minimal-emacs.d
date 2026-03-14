@@ -24,7 +24,6 @@
 
 (use-package avoid
   :ensure nil
-  :defer t
   :config
   (mouse-avoidance-mode 'banish))
 
@@ -88,11 +87,8 @@
   :ensure nil
   :hook ((python-mode python-ts-mode) . eglot-ensure)
   :hook ((typescript-ts-mode tsx-ts-mode) . eglot-ensure)
-  :custom
-  (eglot-autoshutdown t)
   :config
-  (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
-  (add-to-list 'eglot-server-programs '(python-ts-mode . ("pyright-langserver" "--stdio")))
+  (add-to-list 'eglot-server-programs '((python-mode python-ts-mode) . ("pyright-langserver" "--stdio")))
   (add-to-list 'eglot-server-programs '(terraform-mode . ("terraform-ls" "serve")))
   (add-to-list 'eglot-server-programs '((typescript-ts-mode tsx-ts-mode) . ("typescript-language-server" "--stdio"))))
 
@@ -105,23 +101,7 @@
   :config
   (electric-pair-mode +1))
 
-;; Emacs minibuffer configurations.
-(use-package emacs
-  :custom
-  ;; Enable context menu. `vertico-multiform-mode' adds a menu in the minibuffer
-  ;; to switch display modes.
-  (context-menu-mode t)
-  ;; Support opening new minibuffers from inside existing minibuffers.
-  (enable-recursive-minibuffers t)
-  ;; Hide commands in M-x which do not work in the current mode.  Vertico
-  ;; commands are hidden in normal buffers. This setting is useful beyond
-  ;; Vertico.
-  (read-extended-command-predicate #'command-completion-default-include-p)
-  ;; Do not allow the cursor in the minibuffer prompt
-  (minibuffer-prompt-properties
-   '(read-only t cursor-intangible t face minibuffer-prompt))
-  :config
-  (global-set-key [remap dabbrev-expand] 'hippie-expand))
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
 
 (use-package frame
   :ensure nil
@@ -163,8 +143,7 @@
   (gnus-extra-headers '(To Newsgroups X-GM-LABELS))
   (gnus-group-line-format "%M%S%p%P%5y:%B %G\n")
   (gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\”]\”[#’()]")
-  (gnus-keep-backlog '0)
-  (gnus-keep-backlog 'nil)
+  (gnus-keep-backlog nil)
   (gnus-large-newsgroup 200)
   (gnus-mime-display-multipart-related-as-mixed t)
   (gnus-subthread-sort-functions '(gnus-thread-sort-by-date))
@@ -185,11 +164,6 @@
   :config
   (add-hook 'gnus-group-mode-hook 'gnus-topic-mode))
 
-;; Prefer vertico
-(use-package icomplete
-  :ensure nil
-  :config
-  (fido-vertical-mode -1))
 
 (use-package isearch
   :ensure nil
@@ -243,7 +217,7 @@ block."
       (move-beginning-of-line-dwim arg)
     (org-beginning-of-line arg)))
 
-(use-package org-mode
+(use-package org
   :ensure nil
   :bind (:map
          org-mode-map
@@ -251,8 +225,6 @@ block."
          ("M-N" . org-move-item-down)
          ("M-P" . org-move-item-up))
   :config
-  ;; Wire up directly with define-key to avoid use-package generating an
-  ;; autoload stub that tries (require 'org-mode) — the real feature is 'org.
   (define-key org-mode-map [remap move-beginning-of-line]
               #'org-move-beginning-of-line-dwim)
   (org-babel-do-load-languages
@@ -267,15 +239,6 @@ block."
          ("M-p" . python-nav-backward-statement)
          ("M-[" . python-nav-backward-defun)
          ("M-]" . python-nav-forward-defun)))
-
-(use-package recentf
-  :ensure nil
-  :demand t
-  :custom
-  (recentf-max-menu-items 100)
-  (recentf-max-saved-items 100)
-  :config
-  (recentf-mode +1))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
