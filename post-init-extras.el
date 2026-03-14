@@ -151,7 +151,14 @@
   :bind (("C-x , c" . pi-coding-agent)
          ("C-x , d" . pi-coding-agent-cycle-thinking)
          ("C-x , k" . pi-coding-agent-quit)
-         ("C-x , t" . pi-coding-agent-toggle)))
+         ("C-x , t" . pi-coding-agent-toggle))
+  :config
+  (defvar pi-coding-agent-thinking-repeat-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "d") #'pi-coding-agent-cycle-thinking)
+      map)
+    "Repeat map for cycling pi thinking level.")
+  (put 'pi-coding-agent-cycle-thinking 'repeat-map 'pi-coding-agent-thinking-repeat-map))
 
 (use-package terraform-mode
   :ensure t
