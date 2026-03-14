@@ -78,7 +78,8 @@
              (conf-toml-mode . toml-ts-mode)
              (go-mode . go-ts-mode)
              (json-mode . json-ts-mode)
-             (js-json-mode . json-ts-mode)))
+             (js-json-mode . json-ts-mode)
+             (yaml-mode . yaml-ts-mode)))
     (add-to-list 'major-mode-remap-alist mapping))
   :config
   (mp-setup-install-grammars))

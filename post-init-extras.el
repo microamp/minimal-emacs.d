@@ -11,8 +11,7 @@
   ;; Note that you may have to restart Emacs for this to take effect!
   (combobulate-key-prefix "C-c o")
   :hook ((prog-mode . combobulate-mode)
-         (markdown-mode . combobulate-mode)
-         (yaml-mode . combobulate-mode)))
+         (yaml-ts-mode . combobulate-mode)))
 
 (use-package consult
   :ensure t
@@ -43,9 +42,8 @@
    ("C-c n g" . denote-grep))
   :custom
   (denote-known-keywords '("misc" "work"))
+  (denote-directory (expand-file-name "~/.emacs.d/notes/"))
   :config
-  (setq denote-directory (expand-file-name "~/.emacs.d/notes/"))
-
   ;; Automatically rename Denote buffers when opening them so that
   ;; instead of their long file name they have, for example, a literal
   ;; "[D]" followed by the file's title.  Read the doc string of
@@ -58,11 +56,12 @@
          (:map eat-mode-map ("C-c C-SPC" . bury-buffer)))
   :config
   (defun my/eat-switch-or-create ()
-    "Switch to an existing eat buffer, or create one in the current directory."
+    "Switch to an existing live eat buffer, or create one in the current directory."
     (interactive)
-    (if (get-buffer "*eat*")
-        (switch-to-buffer "*eat*")
-      (eat))))
+    (let ((buf (get-buffer "*eat*")))
+      (if (and buf (process-live-p (get-buffer-process buf)))
+          (switch-to-buffer buf)
+        (eat)))))
 
 (use-package eca
   :ensure t)
@@ -92,7 +91,7 @@
   :diminish git-gutter-mode
   :hook (prog-mode . git-gutter-mode)
   :config
-  (setq git-gutter:update-interval 0.02))
+  (setq git-gutter:update-interval 0.5))
 
 (use-package git-gutter-fringe
   :ensure t
@@ -106,7 +105,9 @@
   :ensure t)
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :custom
+  (magit-diff-refine-hunk t))
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
@@ -115,9 +116,6 @@
   ;; `completion-list-mode-map'.
   :bind (:map minibuffer-local-map
               ("M-A" . marginalia-cycle))
-
-  :custom
-  (magit-diff-refine-hunk t)
 
   ;; The :init section is always executed.
   :init
@@ -142,8 +140,10 @@
   ;; (orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch))
   ;; (orderless-component-separator #'orderless-escapable-split-on-space)
   (completion-styles '(orderless basic))
+  ;; Override per-category where orderless alone is insufficient (e.g. partial
+  ;; path completion in find-file). Keep category-defaults intact so built-in
+  ;; categories (buffer, command, etc.) keep their safe fallbacks.
   (completion-category-overrides '((file (styles partial-completion))))
-  (completion-category-defaults nil) ;; Disable defaults, use our settings
   (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
 
 (use-package pi-coding-agent
