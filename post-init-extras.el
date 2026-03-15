@@ -3,6 +3,18 @@
 (use-package agent-shell
   :ensure t)
 
+(use-package apheleia
+  :ensure t
+  :diminish apheleia-mode
+  :hook ((emacs-lisp-mode . apheleia-mode)
+         (go-ts-mode . apheleia-mode)
+         (python-ts-mode . apheleia-mode)
+         (terraform-mode . apheleia-mode))
+  :custom
+  (apheleia-log-debug-info t)
+  :config
+  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(ruff)))
+
 (use-package combobulate
   :ensure t
   :vc (:url "https://github.com/mickeynp/combobulate" :branch "master")
