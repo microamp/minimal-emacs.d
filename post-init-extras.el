@@ -151,7 +151,11 @@
   :bind (("C-x , c" . pi-coding-agent)
          ("C-x , d" . pi-coding-agent-cycle-thinking)
          ("C-x , k" . pi-coding-agent-quit)
-         ("C-x , t" . pi-coding-agent-toggle))
+         ("C-x , t" . pi-coding-agent-toggle)
+         :map
+         pi-coding-agent-input-mode-map
+         ("C-l" . pi-coding-agent-select-model)
+         ("C-x k" . pi-coding-agent-quit))
   :config
   (defvar pi-coding-agent-thinking-repeat-map
     (let ((map (make-sparse-keymap)))
