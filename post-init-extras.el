@@ -137,8 +137,10 @@
   ;; package.
   (marginalia-mode))
 
-(use-package markdown-mode
-  :ensure t)
+(use-package md-ts-mode
+  :ensure t
+  :config
+  (md-ts-mode-enable-global))
 
 (use-package mwim
   :ensure t
