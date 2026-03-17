@@ -1,5 +1,11 @@
 ;; External dependencies
 
+(use-package doric-themes
+  :ensure t
+  :config
+  (setq doric-themes-to-toggle '(doric-marble doric-dark))
+  (doric-themes-select 'doric-marble))
+
 (use-package agent-shell
   :ensure t)
 
