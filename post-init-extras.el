@@ -186,6 +186,7 @@
          pi-coding-agent-input-mode-map
          ("C-l" . pi-coding-agent-select-model)
          ("C-x k" . pi-coding-agent-quit))
+  :hook (pi-coding-agent-input-mode . toggle-truncate-lines)
   :config
   (defvar pi-coding-agent-thinking-repeat-map
     (let ((map (make-sparse-keymap)))
