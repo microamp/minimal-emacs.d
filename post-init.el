@@ -284,5 +284,5 @@ block."
 (set-frame-font "monospace:pixelsize=13" nil t)
 
 ;; Theme is loaded via doric-themes in post-init-extras.el
-;; (mapc #'disable-theme custom-enabled-themes) ; disable all active themes
-;; (load-theme 'modus-operandi-tinted t)        ; load built-in modus-operandi theme
+(mapc #'disable-theme custom-enabled-themes) ; disable all active themes
+(load-theme 'modus-operandi-tinted t)        ; load built-in modus-operandi themes

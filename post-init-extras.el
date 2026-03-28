@@ -1,9 +1,18 @@
 ;; External dependencies
 
 (use-package doric-themes
+  :disabled
   :ensure t
   :config
   (setq doric-themes-to-toggle '(doric-marble doric-dark))
+
+  (defun my/doric-marble-overrides ()
+    "Apply colour overrides for doric-marble: use claude.ai background."
+    (when (eq (car custom-enabled-themes) 'doric-marble)
+      (custom-set-faces
+       '(default ((t :background "#f7f4ef"))))))
+
+  (add-hook 'doric-themes-after-load-theme-hook #'my/doric-marble-overrides)
   (doric-themes-select 'doric-marble))
 
 (use-package agent-shell
