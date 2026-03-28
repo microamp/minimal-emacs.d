@@ -134,7 +134,8 @@
 (use-package magit
   :ensure t
   :custom
-  (magit-diff-refine-hunk t))
+  (magit-diff-refine-hunk t)
+  (magit-diff-visit-prefer-worktree t))
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
