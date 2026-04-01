@@ -10,7 +10,6 @@
 
 (use-package autorevert
   :ensure nil
-  :diminish auto-revert-mode
   :custom
   ;; Poll every 1 second as a fallback (file notifications handle most cases
   ;; instantly without any polling cost).
@@ -94,8 +93,7 @@
   (add-to-list 'eglot-server-programs '((typescript-ts-mode tsx-ts-mode) . ("typescript-language-server" "--stdio"))))
 
 (use-package eldoc
-  :ensure nil
-  :diminish eldoc-mode)
+  :ensure nil)
 
 (use-package elec-pair
   :ensure nil
@@ -258,7 +256,6 @@ block."
 
 (use-package which-key
   :ensure nil
-  :diminish which-key-mode
   :config
   (which-key-mode +1))
 

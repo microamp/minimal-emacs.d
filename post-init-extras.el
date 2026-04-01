@@ -15,8 +15,13 @@
   (add-hook 'doric-themes-after-load-theme-hook #'my/doric-marble-overrides)
   (doric-themes-select 'doric-marble))
 
+;; npm_config_prefix=$HOME/.local npm install -g claude-code
+;; npm_config_prefix=$HOME/.local npm install -g @agentclientprotocol/claude-agent-acp
+;; see https://docs.fireworks.ai/ecosystem/integrations/claude-code for more info
 (use-package agent-shell
-  :ensure t)
+  :ensure t
+  :bind (("C-x , c" . agent-shell-anthropic-start-claude-code)
+         ("C-x , t" . agent-shell-toggle)))
 
 (use-package apheleia
   :ensure t
