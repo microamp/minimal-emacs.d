@@ -20,7 +20,6 @@
 
 (use-package apheleia
   :ensure t
-  :diminish apheleia-mode
   :hook ((emacs-lisp-mode . apheleia-mode)
          (go-ts-mode . apheleia-mode)
          (python-ts-mode . apheleia-mode)
@@ -46,9 +45,6 @@
          ("C-x p q" . consult-ripgrep)
          ("M-g i" . consult-imenu)
          ("M-s M-l" . consult-line)))
-
-(use-package diminish
-  :ensure t)
 
 ;; Remember that the website version of this manual shows the latest
 ;; developments, which may not be available in the package you are
@@ -115,7 +111,6 @@
 
 (use-package git-gutter
   :ensure t
-  :diminish git-gutter-mode
   :hook (prog-mode . git-gutter-mode)
   :config
   (setq git-gutter:update-interval 0.5))
@@ -177,6 +172,7 @@
   (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
 
 (use-package pi-coding-agent
+  :disabled
   :ensure t
   :bind (("C-x , c" . pi-coding-agent)
          ("C-x , d" . pi-coding-agent-cycle-thinking)
