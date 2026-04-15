@@ -19,9 +19,13 @@
 ;; npm_config_prefix=$HOME/.local npm install -g @agentclientprotocol/claude-agent-acp
 ;; see https://docs.fireworks.ai/ecosystem/integrations/claude-code for more info
 (use-package agent-shell
+  :disabled
   :ensure t
   :bind (("C-x , c" . agent-shell-anthropic-start-claude-code)
-         ("C-x , t" . agent-shell-toggle)))
+         ("C-x , t" . agent-shell-toggle)
+         :map
+         agent-shell-mode-map
+         ("C-x , k" . kill-current-buffer)))
 
 (use-package apheleia
   :ensure t
@@ -177,11 +181,11 @@
   (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
 
 (use-package pi-coding-agent
-  :disabled
   :ensure t
   :bind (("C-x , c" . pi-coding-agent)
          ("C-x , d" . pi-coding-agent-cycle-thinking)
          ("C-x , k" . pi-coding-agent-quit)
+         ("C-x , n" . pi-coding-agent-new-session)
          ("C-x , t" . pi-coding-agent-toggle)
          :map
          pi-coding-agent-input-mode-map
