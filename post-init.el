@@ -109,6 +109,23 @@
   :config
   (blink-cursor-mode +1))
 
+(use-package pulse
+  :ensure nil
+  :custom (pulse-delay 0.01)
+  :config
+  (defun nsh/pulse (&rest _) (pulse-momentary-highlight-one-line (point)))
+  (dolist (cmd '(recenter
+                 beginning-of-buffer
+                 end-of-buffer
+                 other-window
+                 delete-window
+                 delete-other-window
+                 xref-find-definitions
+                 xref-go-back
+                 scroll-up-command
+                 scroll-down-command))
+    (advice-add cmd :after #'nsh/pulse)))
+
 (use-package gnus
   :bind (:map
          gnus-group-mode-map
