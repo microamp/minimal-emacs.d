@@ -113,7 +113,9 @@
   :ensure nil
   :custom (pulse-delay 0.01)
   :config
-  (defun nsh/pulse (&rest _) (pulse-momentary-highlight-one-line (point)))
+  (defun nsh/pulse (&rest _)
+    (unless (derived-mode-p 'eat-mode)
+      (pulse-momentary-highlight-one-line (point))))
   (dolist (cmd '(recenter
                  beginning-of-buffer
                  end-of-buffer
